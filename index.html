@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>OpenThings</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <div class="window-title">
+                    <img src="openthings_logo.png" class="logo">OpenThings</div>
+            </li>
+            <!-- <li>
+                <a href="#news">News</a>
+            </li>
+            <li>
+                <a href="#contact">Contact</a>
+            </li> -->
+            <li style="float:right">
+                <button onclick="closeWindow()">&times;</button>
+            </li>
+            <li style="float:right">
+                <button onclick="maximizeWindow()">Max</button>
+            </li>
+            <li style="float:right">
+                <button onclick="minimizeWindow()">_</button>
+            </li>
+
+            <li style="float:right">
+                <button onclick="showNewClientModal()">
+                    <i class="fas fa-user-plus"></i>
+                </button>
+            </li>
+            <li style="float:right">
+                <button onclick="showNewTaskModal()">
+                    <i class="fas fa-plus-square"></i>
+                </button>
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <div id="content">
+        <div class="client" v-for="client in clients">
+            <div class="client-header">
+                <div class="client-name">{{ client.name }}</div>
+                <div class="client-button-bar">
+                        <button class="client-button-bar-button"><i class="fas fa-plus-circle"></i></button>
+                    <button class="client-button-bar-button" onclick="toggleTasks(event)">
+                        <i id="icon-arrow" class="fas fa-chevron-circle-up"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="client-body">
+                <div class="client-body-task" v-for="task in client.tasks">{{task}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+        {{x}} Tasks offen
+    </div>
+
+
+    <!-- The Modal Client -->
+    <div id="clientModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+                <h2>Neuer Kunde hinzufügen</h2>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="newClientName" placeholder="Neuer Kunde">
+                <button onclick="addNewClient()">Hinzufügen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal Tasks -->
+    <div id="taskModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+                <h2>Neuer Aufgabe hinzufügen</h2>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="newTaskTitle" placeholder="Neue Aufgabe">
+
+                <select id="selectClients" class="select">
+                    <option v-for="client in clients" v-bind:value="client.name">
+                        {{ client.name }}
+                    </option>
+                </select>
+
+                <button onclick="addTaskToClient()" class="modal-button">Hinzufügen</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
